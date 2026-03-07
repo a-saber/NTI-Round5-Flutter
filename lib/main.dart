@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main(){
   runApp(MyApp());
@@ -9,13 +10,95 @@ class MyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // design 1st screen
-      home: ProfileTask(),
+    return ScreenUtilInit(
+      designSize: Size(375, 812),
+      builder: (context, widget){
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          // design 1st screen
+          home: ChangePasswordView(),
+        );
+      },
     );
   }
 }
+
+class ChangePasswordView extends StatelessWidget {
+  const ChangePasswordView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffF3F5F4),
+      body: Column(
+        children:
+        [
+          Container(
+            width: double.infinity,
+            height: 298.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20.r),
+                bottomRight: Radius.circular(20.r)
+              ),
+              image: DecorationImage(
+                image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg'),
+                fit: BoxFit.cover
+              )
+            ),
+          ),
+          SizedBox(height: 20,),
+          Padding(
+            padding: REdgeInsets.symmetric(horizontal: 22.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Name',
+                    hintStyle: TextStyle(
+                        color: Color(0xff6E6A7C),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w200
+                    ),
+                    contentPadding: REdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.r),
+                      borderSide: BorderSide(
+                        color: Color(0xffCDCDCD),
+                        width: 1
+                      )
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.r),
+                        borderSide: BorderSide(
+                            color: Color(0xffCDCDCD),
+                            width: 1
+                        )
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.r),
+                        borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 1
+                        )
+                    ),
+
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 class ProfileTask extends StatelessWidget {
   const ProfileTask({super.key});
