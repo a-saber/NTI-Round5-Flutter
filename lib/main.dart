@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget{
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.blue,
-          leading: Icon(Icons.add),
-          title: Text('Welcome'),
+          backgroundColor: Colors.white,
+          leading: Icon(Icons.account_balance_wallet_rounded, color: Colors.grey,),
+          title: Text('Welcome', style: TextStyle(color: Colors.black),),
           actions: [
             Icon(Icons.search),
             Icon(Icons.check),
@@ -25,30 +25,73 @@ class MyApp extends StatelessWidget{
           ],
         ),
         body: Container(
-          color: Colors.blue,
-          child: SizedBox(
-            height: double.infinity,
-            child: Row(
-              children: [
-              Text(
-                  'Hello World 1',
-                  style: TextStyle(
-                    fontSize: 15.5,
-                    color: Colors.pink,
-                    fontWeight: FontWeight.w900
+          color: Colors.grey,
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(height: 50,),
+              Container(
+                height: 300,
+                width: 100,
+                // color: Colors.red,
+                decoration: BoxDecoration(
+                  // color: Colors.red,
+                  borderRadius: BorderRadius.circular(20),
+                  shape: BoxShape.rectangle,
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.blue,
+                      Colors.red,
+                      Colors.black,
+                    ]
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 1),
+                      offset: Offset(10, 0),
+                      spreadRadius: 3,
+                      blurRadius: 10
+                    ),
+                    BoxShadow(
+                      color: Colors.red,
+                      offset: Offset(-10, 0),
+                      spreadRadius: 3,
+                      blurRadius: 10
+                    ),
+                  ]
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('data'),
+                    Text('data'),
+                  ],
+                ),
+              ),
+              // Spacer(),
+              SizedBox(height: 50,),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  color: Colors.green,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('data'),
+                      Text('data'),
+                    ],
                   ),
                 ),
-                Text(
-                  'Hello World 2',
-                  style: TextStyle(
-                    fontSize: 15.5,
-                    color: Colors.pink,
-                    fontWeight: FontWeight.w900
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+
+
+            ],
+          )
         )
       ),
     );
