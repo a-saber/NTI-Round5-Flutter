@@ -22,9 +22,131 @@ class ProfileTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.deepPurple,
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        leading: Icon(Icons.arrow_back_ios_new, color: Colors.blue,),
+        title: Text('Profile', style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        actions: [
+          Icon(Icons.settings, color: Colors.blue)
+        ],
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children:
+            [
+              Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue,
+                  image: DecorationImage(
+                      image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg'),
+                    fit: BoxFit.cover
+                  )
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text('Ahmed Saber', style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 25
+              ),),
+              SizedBox(height: 5,),
+              Text('Active since 2 days', style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 15
+              ),),
+              SizedBox(height: 5,),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.pink,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                onPressed: (){
+                  print('Button pressed');
+                },
+                child: Text('BTN 1')
+              ),
+              SizedBox(height: 5,),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Info')
+              ),
+              SizedBox(height: 5,),
+              CustomInfoSection(
+                icon: Icons.email,
+                title: 'Email',
+                value: 'gHv0g@example.com',
+              ),
+              SizedBox(height: 5,),
+              CustomInfoSection(
+                icon: Icons.phone,
+                title: 'Phone',
+                value: '0123456789',
+              ),
+              SizedBox(height: 5,),
+              CustomInfoSection(
+                icon: Icons.location_on_outlined,
+                title: 'Location',
+                value: 'Egypt',
+              ),
+
+          
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
+class CustomInfoSection extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+
+  const CustomInfoSection({super.key,
+    required this.icon,
+    required this.title,
+    required this.value
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.pink,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10)
+          )
+      ),
+      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        children:
+        [
+          Icon(icon, size: 30, color: Colors.white,),
+          SizedBox(width: 10,),
+          Text(title, style: TextStyle(color: Colors.white),),
+          Spacer(),
+          Text(value)
+        ],
+      ),
+    );
+  }
+}
+
 
 
 class MessageScreen extends StatelessWidget {
