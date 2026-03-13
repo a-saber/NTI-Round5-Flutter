@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'core/widgets/custom_btn.dart';
+import 'core/widgets/custom_text_field.dart';
+
 void main(){
   runApp(MyApp());
 }
@@ -14,6 +17,9 @@ class MyApp extends StatelessWidget{
       designSize: Size(375, 812),
       builder: (context, widget){
         return MaterialApp(
+          theme: ThemeData(
+            fontFamily: 'Lexend_Deca'
+          ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
           home: ChangePasswordView(),
@@ -90,7 +96,30 @@ class ChangePasswordView extends StatelessWidget {
 
                   ),
                 ),
+                SizedBox(height: 30,),
+                CustomTextField(
+
+                )
               ],
+            ),
+          ),
+
+          SizedBox(height: 20,),
+          Text('Change Password',
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+
+          )),
+        Text('Change Password',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+
+                  )),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: CustomBTN(
+              text: 'Login',
+              onPressed: (){},
             ),
           )
         ],
