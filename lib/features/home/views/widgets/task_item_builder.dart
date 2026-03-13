@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti5/core/utils/app_colors.dart';
 
 class TaskItemBuilder extends StatelessWidget {
-  const TaskItemBuilder({super.key});
-
+  const TaskItemBuilder({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +32,7 @@ class TaskItemBuilder extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('title',
+                Text(title,
                 style: TextStyle(
                   color: AppColors.hint,
                   fontWeight: FontWeight.w400,
