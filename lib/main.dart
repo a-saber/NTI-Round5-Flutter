@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/widgets/custom_btn.dart';
 import 'core/widgets/custom_text_field.dart';
+import 'features/home/views/home_view.dart';
 
 void main(){
   runApp(MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home: ChangePasswordView(),
+          home: HomeView(),
         );
       },
     );
