@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti5/core/utils/app_colors.dart';
+/*
+Country
+ - name
+ - iso
+ - code
 
+ */
 class UserModel {
   String? name;
   String? email;
@@ -23,6 +30,8 @@ class LoginViewState extends State<LoginView>{
   final passwordController = TextEditingController();
 
   bool passwordSecure = true;
+  bool switchValue = true;
+  bool checkBoxValue = true;
 
   List<String> cities = [
     'Cairo',
@@ -37,6 +46,7 @@ class LoginViewState extends State<LoginView>{
     UserModel(id:3,name: 'Ali', email: 'nti@example.com', phone: '1635848335'),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,161 +58,218 @@ class LoginViewState extends State<LoginView>{
           padding: REdgeInsets.all(20.0),
           child: Form(
             key: formKey,
-            child: Column(
-              children:
-              [
-                TextFormField(
-                  validator: (String? value){
-                    //RegEx
-                    RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                    bool result = emailRegex.hasMatch(value??'');
-                    return result? null: 'Enter Valid Email';
-
-                    // if(value == null || value.isEmpty == true){
-                    //   return 'This field is required';
-                    // }
-                    // else if(value.contains('@') == false){
-                    //   return 'Enter Valid Email';
-                    // }
-                    // else {
-                    //   return null;
-                    // }
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Email',
+            child: SingleChildScrollView(
+              child: Column(
+                children:
+                [
+                  TextFormField(
+                    validator: (String? value){
+                      //RegEx
+                      RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                      bool result = emailRegex.hasMatch(value??'');
+                      return result? null: 'Enter Valid Email';
+              
+                      // if(value == null || value.isEmpty == true){
+                      //   return 'This field is required';
+                      // }
+                      // else if(value.contains('@') == false){
+                      //   return 'Enter Valid Email';
+                      // }
+                      // else {
+                      //   return null;
+                      // }
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                    ),
                   ),
-                ),
-                TextFormField(
-                  controller: passwordController,
-                  onFieldSubmitted: (value){
-                    print('onFieldSubmitted $value');
-                  },
+                  TextFormField(
+                    controller: passwordController,
+                    onFieldSubmitted: (value){
+                      print('onFieldSubmitted $value');
+                    },
+              
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    // onChanged: (value){
+                    //   print('onChanged $value');
+                    //   // formKey.currentState?.validate();
+                    // },
+                    validator: (String? value){
+                      // regex
+                      RegExp passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
+                      bool result = passwordRegex.hasMatch(value??'');
+                      return result? null: 'Password must contain A-Z, a-z, 0-9 and at least 6 characters';
+                      // if(value == null || value.isEmpty == true){
+                      //   return 'This field is required';
+                      // }
+                      // else if(value.length < 6){
+                      //   return 'Password must be at least 6 characters';
+                      // }
+                      // else {
+                      //   return null;
+                      // }
+                    },
+                    obscureText: passwordSecure,
+                    // obscuringCharacter: '*',
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: (){
+                            passwordSecure = !passwordSecure;
+                            setState(() {
+              
+                            });
+                            print(passwordSecure);
+                          }, icon: Icon(Icons.remove_red_eye_outlined)),
+                        hintText: 'Password'
+                    ),
+                  ),
+                  TextFormField(
+                    controller: dateController,
+                    // enabled: false,
+                    readOnly: true,
+                    onTap: ()async{
+                      print('tapped');
+              
+                      DateTime? dateTime = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(Duration(days: 30))
+                      );
+                      if(dateTime != null){
+                        dateController.text = dateTime.toString();
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    // onChanged: (value){
+                    //   print('onChanged $value');
+                    //   // formKey.currentState?.validate();
+                    // },
+                    validator: (String? value){
+              
+                      if(value == null || value.isEmpty == true){
+                        return 'This field is required';
+                      }
+                      // else if(value.length < 6){
+                      //   return 'Password must be at least 6 characters';
+                      // }
+                      else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Data'
+                    ),
+                  ),
+              
+                  DropdownButtonFormField<String>(
+                    items: cities.map<DropdownMenuItem<String>>(
+                        (String value)=> DropdownMenuItem(value: value,child: Row(
+                          children: [
+                            Icon(Icons.location_city),
+                            SizedBox(width: 10,),
+                            Text(value),
+                          ],
+                        ),)
+                    ).toList(),
+                    // [
+                    //   for(int i = 0; i < cities.length; i++)
+                    //   DropdownMenuItem(value: cities[i],child: Text(cities[i]),),
+                    // ],
+                    onChanged: (value){
+                      print('new Value $value');
+                    }
+                  ),
+              
+                  SizedBox(height: 20,),
+                  DropdownButtonFormField<int>(
+                    items: users.map(
+                        (userModel)=> DropdownMenuItem(value: userModel.id,
+                            child: Row(
+                              children:
+                              [
+                                Icon(Icons.person),
+                                SizedBox(width: 10,),
+                                Text(userModel.email??''),
+                              ],
+                            ))
+                    ).toList(),
+                    onChanged: (userModelId){
+                      print('Selected User : ${userModelId}');
+                    },
+              
+                    decoration: InputDecoration(
+                      hintText: 'Select User',
+                    ),
+                  ),
 
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // onChanged: (value){
-                  //   print('onChanged $value');
-                  //   // formKey.currentState?.validate();
-                  // },
-                  validator: (String? value){
-                    // regex
-                    RegExp passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
-                    bool result = passwordRegex.hasMatch(value??'');
-                    return result? null: 'Password must contain A-Z, a-z, 0-9 and at least 6 characters';
-                    // if(value == null || value.isEmpty == true){
-                    //   return 'This field is required';
-                    // }
-                    // else if(value.length < 6){
-                    //   return 'Password must be at least 6 characters';
-                    // }
-                    // else {
-                    //   return null;
-                    // }
-                  },
-                  obscureText: passwordSecure,
-                  // obscuringCharacter: '*',
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: (){
-                          passwordSecure = !passwordSecure;
+                  SizedBox(height: 20,),
+                  CircularProgressIndicator(
+                    color: AppColors.primary,
+                  ),
+                  SizedBox(height: 20,),
+                  LinearProgressIndicator(
+                    color: AppColors.primary,
+                  ),
+                  SizedBox(height: 20,),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Switch'),
+              
+                      Switch(
+                        value: switchValue,
+                        onChanged: (value){
                           setState(() {
-
+                            switchValue = value;
                           });
-                          print(passwordSecure);
-                        }, icon: Icon(Icons.remove_red_eye_outlined)),
-                      hintText: 'Password'
+                        },
+                        activeColor: Colors.orange,
+              
+                      ),
+                    ],
                   ),
-                ),
-                TextFormField(
-                  controller: dateController,
-                  // enabled: false,
-                  readOnly: true,
-                  onTap: ()async{
-                    print('tapped');
-
-                    DateTime? dateTime = await showDatePicker(
-                        context: context,
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 30))
-                    );
-                    if(dateTime != null){
-                      dateController.text = dateTime.toString();
-                    }
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // onChanged: (value){
-                  //   print('onChanged $value');
-                  //   // formKey.currentState?.validate();
-                  // },
-                  validator: (String? value){
-
-                    if(value == null || value.isEmpty == true){
-                      return 'This field is required';
-                    }
-                    // else if(value.length < 6){
-                    //   return 'Password must be at least 6 characters';
-                    // }
-                    else {
-                      return null;
-                    }
-                  },
-                  decoration: InputDecoration(
-                      hintText: 'Data'
+                  SwitchListTile(
+                    value: switchValue,
+                    onChanged: (value){
+                      setState(() {
+                        switchValue = value;
+                      });
+                    },
+                    activeColor: Colors.orange,
+                    title: Text('Switch 01'),
+                    subtitle: Text('Switch 01'),
+              
                   ),
-                ),
-
-                DropdownButtonFormField<String>(
-                  items: cities.map<DropdownMenuItem<String>>(
-                      (String value)=> DropdownMenuItem(value: value,child: Row(
-                        children: [
-                          Icon(Icons.location_city),
-                          SizedBox(width: 10,),
-                          Text(value),
-                        ],
-                      ),)
-                  ).toList(),
-                  // [
-                  //   for(int i = 0; i < cities.length; i++)
-                  //   DropdownMenuItem(value: cities[i],child: Text(cities[i]),),
-                  // ],
-                  onChanged: (value){
-                    print('new Value $value');
-                  }
-                ),
-
-                SizedBox(height: 20,),
-                DropdownButtonFormField<int>(
-                  items: users.map(
-                      (userModel)=> DropdownMenuItem(value: userModel.id,
-                          child: Row(
-                            children:
-                            [
-                              Icon(Icons.person),
-                              SizedBox(width: 10,),
-                              Text(userModel.email??''),
-                            ],
-                          ))
-                  ).toList(),
-                  onChanged: (userModelId){
-                    print('Selected User : ${userModelId}');
-                  },
-
-                  decoration: InputDecoration(
-                    hintText: 'Select User',
+                  CheckboxListTile(
+                    value: checkBoxValue,
+                    onChanged: (value){
+                      setState(() {
+                        if(value != null){
+                          checkBoxValue = value;
+                        }
+                      });
+                    },
+                    activeColor: Colors.orange,
+                    title: Text('Checkbox 01'),
+                    subtitle: Text('Checkbox 01'),
+              
                   ),
-                ),
-
-
-
-                SizedBox(height: 20,),
-                ElevatedButton(onPressed: (){
-                  // validate form
-                  bool? result = formKey.currentState?.validate();
-                  print(result);
-                  if(result == true){
-                    // TODO Login API
-                  }
-                }, child: Text('login'))
-              ],
+              
+              
+              
+              
+                  SizedBox(height: 20,),
+                  ElevatedButton(onPressed: (){
+                    // validate form
+                    bool? result = formKey.currentState?.validate();
+                    print(result);
+                    if(result == true){
+                      // TODO Login API
+                    }
+                  }, child: Text('login'))
+                ],
+              ),
             ),
           ),
         ),
