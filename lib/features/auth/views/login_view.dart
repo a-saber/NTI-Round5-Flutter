@@ -203,13 +203,22 @@ class LoginViewState extends State<LoginView>{
                   ),
 
                   SizedBox(height: 20,),
-                  CircularProgressIndicator(
-                    color: AppColors.primary,
+                  Builder(
+                    builder: (context){
+                      if(switchValue){
+                        return CircularProgressIndicator(
+                          color: AppColors.primary,
+                        );
+                      }
+                      else {
+                        return LinearProgressIndicator(
+                          color: AppColors.primary,
+                        );
+                      }
+                    }
                   ),
-                  SizedBox(height: 20,),
-                  LinearProgressIndicator(
-                    color: AppColors.primary,
-                  ),
+
+
                   SizedBox(height: 20,),
 
                   Row(
