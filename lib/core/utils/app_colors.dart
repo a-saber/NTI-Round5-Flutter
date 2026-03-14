@@ -8,5 +8,6 @@ abstract class AppColors{
   static Color black = Color(0xff24252C);
   static Color black2 = Colors.black;
   static Color white = Colors.white;
+  static Color error = Colors.red;
 
 }

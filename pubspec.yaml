@@ -38,6 +38,7 @@ dependencies:
   flutter_svg:
   dio:
   dartz:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti5/core/network/api_helper.dart';
 import 'package:nti5/core/utils/app_colors.dart';
+import 'package:nti5/features/auth/data/models/login_response_model.dart';
+import 'package:nti5/features/auth/data/models/user_model.dart';
+import 'package:nti5/features/home/views/home_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -38,19 +41,16 @@ class LoginViewState extends State<LoginView>{
                     controller: emailController,
                     validator: (String? value){
                       //RegEx
-                      RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                      bool result = emailRegex.hasMatch(value??'');
-                      return result? null: 'Enter Valid Email';
+                      // RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                      // bool result = emailRegex.hasMatch(value??'');
+                      // return result? null: 'Enter Valid Email';
 
-                      // if(value == null || value.isEmpty == true){
-                      //   return 'This field is required';
-                      // }
-                      // else if(value.contains('@') == false){
-                      //   return 'Enter Valid Email';
-                      // }
-                      // else {
-                      //   return null;
-                      // }
+                      if(value == null || value.isEmpty == true){
+                        return 'This field is required';
+                      }
+                      else {
+                        return null;
+                      }
                     },
                     decoration: InputDecoration(
                       hintText: 'Email',
@@ -69,7 +69,7 @@ class LoginViewState extends State<LoginView>{
                     // },
                     validator: (String? value){
                       // regex
-                      RegExp passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$');
+                      RegExp passwordRegex = RegExp(r'^[\w]{6,}$');
                       bool result = passwordRegex.hasMatch(value??'');
                       return result? null: 'Password must contain A-Z, a-z, 0-9 and at least 6 characters';
                       // if(value == null || value.isEmpty == true){
@@ -111,15 +111,29 @@ class LoginViewState extends State<LoginView>{
     );
   }
   void login() async{
-    // validate form
-    bool? result = formKey.currentState?.validate();
-    print(result);
-    if(result == true){
-      // TODO Login API
+    if(formKey.currentState?.validate() == true){
       setState(() {
         isLoading = true;
       });
-      await APIHelper.login(username: emailController.text, password: passwordController.text);
+      var result = await APIHelper.login(username: emailController.text, password: passwordController.text);
+      result.fold(
+          (String error){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(error, style: TextStyle(color: AppColors.white),),
+              backgroundColor: AppColors.error,
+            ));
+          },
+          (UserModel userModel){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Login successfully\n Welcome ${userModel.username}', style: TextStyle(color: AppColors.white),),
+              backgroundColor: AppColors.primary,
+            ));
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context)=> HomeView(userModel: userModel,)),
+                (r)=> false
+            );
+          }
+      );
       setState(() {
         isLoading = false;
       });

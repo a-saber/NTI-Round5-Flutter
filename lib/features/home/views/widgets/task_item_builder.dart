@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti5/core/utils/app_colors.dart';
+import 'package:nti5/features/home/data/models/task_model.dart';
 
 class TaskItemBuilder extends StatelessWidget {
-  const TaskItemBuilder({super.key, required this.title});
-  final String title;
+  const TaskItemBuilder({super.key, required this.task});
+  final TaskModel task;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +33,7 @@ class TaskItemBuilder extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
+                Text(task.title??"",
                 style: TextStyle(
                   color: AppColors.hint,
                   fontWeight: FontWeight.w400,
