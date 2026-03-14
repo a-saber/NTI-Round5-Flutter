@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti5/core/network/api_helper.dart';
 import 'package:nti5/core/utils/app_colors.dart';
-/*
-Country
- - name
- - iso
- - code
 
- */
-class UserModel {
-  String? name;
-  String? email;
-  String? phone;
-  int id;
-
-  UserModel({ required this.id,  this.name, this.email, this.phone});
-}
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -24,27 +11,12 @@ class LoginView extends StatefulWidget {
 }
 class LoginViewState extends State<LoginView>{
   final formKey = GlobalKey<FormState>();
-
-  final dateController = TextEditingController();
-
   final passwordController = TextEditingController();
-
+  final emailController = TextEditingController();
   bool passwordSecure = true;
-  bool switchValue = true;
-  bool checkBoxValue = true;
 
-  List<String> cities = [
-    'Cairo',
-    'Alex',
-    'Giza',
-    'Ismailia'
-  ];
+  bool isLoading = false;
 
-  List<UserModel> users = [
-    UserModel(id:1, name: 'Ahmed', email: 'T6b6y@example.com', phone: '01011111111'),
-    UserModel(id:2,name: 'Saber', email: 'saber@eg.com', phone: '01216545645'),
-    UserModel(id:3,name: 'Ali', email: 'nti@example.com', phone: '1635848335'),
-  ];
 
 
   @override
@@ -63,12 +35,13 @@ class LoginViewState extends State<LoginView>{
                 children:
                 [
                   TextFormField(
+                    controller: emailController,
                     validator: (String? value){
                       //RegEx
                       RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                       bool result = emailRegex.hasMatch(value??'');
                       return result? null: 'Enter Valid Email';
-              
+
                       // if(value == null || value.isEmpty == true){
                       //   return 'This field is required';
                       // }
@@ -88,8 +61,8 @@ class LoginViewState extends State<LoginView>{
                     onFieldSubmitted: (value){
                       print('onFieldSubmitted $value');
                     },
-              
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
+
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
                     // onChanged: (value){
                     //   print('onChanged $value');
                     //   // formKey.currentState?.validate();
@@ -116,167 +89,19 @@ class LoginViewState extends State<LoginView>{
                           onPressed: (){
                             passwordSecure = !passwordSecure;
                             setState(() {
-              
+
                             });
                             print(passwordSecure);
                           }, icon: Icon(Icons.remove_red_eye_outlined)),
                         hintText: 'Password'
                     ),
                   ),
-                  TextFormField(
-                    controller: dateController,
-                    // enabled: false,
-                    readOnly: true,
-                    onTap: ()async{
-                      print('tapped');
-              
-                      DateTime? dateTime = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(Duration(days: 30))
-                      );
-                      if(dateTime != null){
-                        dateController.text = dateTime.toString();
-                      }
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    // onChanged: (value){
-                    //   print('onChanged $value');
-                    //   // formKey.currentState?.validate();
-                    // },
-                    validator: (String? value){
-              
-                      if(value == null || value.isEmpty == true){
-                        return 'This field is required';
-                      }
-                      // else if(value.length < 6){
-                      //   return 'Password must be at least 6 characters';
-                      // }
-                      else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                        hintText: 'Data'
-                    ),
-                  ),
-              
-                  DropdownButtonFormField<String>(
-                    items: cities.map<DropdownMenuItem<String>>(
-                        (String value)=> DropdownMenuItem(value: value,child: Row(
-                          children: [
-                            Icon(Icons.location_city),
-                            SizedBox(width: 10,),
-                            Text(value),
-                          ],
-                        ),)
-                    ).toList(),
-                    // [
-                    //   for(int i = 0; i < cities.length; i++)
-                    //   DropdownMenuItem(value: cities[i],child: Text(cities[i]),),
-                    // ],
-                    onChanged: (value){
-                      print('new Value $value');
-                    }
-                  ),
-              
-                  SizedBox(height: 20,),
-                  DropdownButtonFormField<int>(
-                    items: users.map(
-                        (userModel)=> DropdownMenuItem(value: userModel.id,
-                            child: Row(
-                              children:
-                              [
-                                Icon(Icons.person),
-                                SizedBox(width: 10,),
-                                Text(userModel.email??''),
-                              ],
-                            ))
-                    ).toList(),
-                    onChanged: (userModelId){
-                      print('Selected User : ${userModelId}');
-                    },
-              
-                    decoration: InputDecoration(
-                      hintText: 'Select User',
-                    ),
-                  ),
 
                   SizedBox(height: 20,),
-                  Builder(
-                    builder: (context){
-                      if(switchValue){
-                        return CircularProgressIndicator(
-                          color: AppColors.primary,
-                        );
-                      }
-                      else {
-                        return LinearProgressIndicator(
-                          color: AppColors.primary,
-                        );
-                      }
-                    }
-                  ),
-
-
+                  ElevatedButton(onPressed: login, child: Text('login')),
                   SizedBox(height: 20,),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Switch'),
-              
-                      Switch(
-                        value: switchValue,
-                        onChanged: (value){
-                          setState(() {
-                            switchValue = value;
-                          });
-                        },
-                        activeColor: Colors.orange,
-              
-                      ),
-                    ],
-                  ),
-                  SwitchListTile(
-                    value: switchValue,
-                    onChanged: (value){
-                      setState(() {
-                        switchValue = value;
-                      });
-                    },
-                    activeColor: Colors.orange,
-                    title: Text('Switch 01'),
-                    subtitle: Text('Switch 01'),
-              
-                  ),
-                  CheckboxListTile(
-                    value: checkBoxValue,
-                    onChanged: (value){
-                      setState(() {
-                        if(value != null){
-                          checkBoxValue = value;
-                        }
-                      });
-                    },
-                    activeColor: Colors.orange,
-                    title: Text('Checkbox 01'),
-                    subtitle: Text('Checkbox 01'),
-              
-                  ),
-              
-              
-              
-              
-                  SizedBox(height: 20,),
-                  ElevatedButton(onPressed: (){
-                    // validate form
-                    bool? result = formKey.currentState?.validate();
-                    print(result);
-                    if(result == true){
-                      // TODO Login API
-                    }
-                  }, child: Text('login'))
+                  if(isLoading)
+                    CircularProgressIndicator(color: AppColors.primary,)
                 ],
               ),
             ),
@@ -284,5 +109,20 @@ class LoginViewState extends State<LoginView>{
         ),
       ),
     );
+  }
+  void login() async{
+    // validate form
+    bool? result = formKey.currentState?.validate();
+    print(result);
+    if(result == true){
+      // TODO Login API
+      setState(() {
+        isLoading = true;
+      });
+      await APIHelper.login(username: emailController.text, password: passwordController.text);
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }
