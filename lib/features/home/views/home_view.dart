@@ -8,6 +8,7 @@ import 'package:nti5/features/auth/data/models/user_model.dart';
 import 'package:nti5/features/auth/views/login_view.dart';
 import 'package:nti5/features/home/data/models/task_model.dart';
 
+import '../../add_task/views/add_task_view.dart';
 import 'widgets/task_item_builder.dart';
 
 
@@ -34,6 +35,12 @@ class _MainLayoutState extends State<MainLayout> {
         index: currentIndex,
         children: screens,
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        backgroundColor: AppColors.primary,
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> AddTaskView()));
+        }, child: Icon(Icons.add, color: AppColors.white,),),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: AppColors.primary,
         // backgroundColor: Colors.transparent,

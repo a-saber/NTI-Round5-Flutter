@@ -6,18 +6,25 @@ import 'package:nti5/core/utils/app_assets.dart';
 import '../utils/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, this.prefixIconPath});
+  const CustomTextField({super.key, this.prefixIconPath, this.hint, required this.controller, this.validator});
   final String? prefixIconPath;
+  final String? hint;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       style: TextStyle(
           color: AppColors.black,
           fontSize: 14.sp,
           fontWeight: FontWeight.w200
       ),
+      validator: validator,
       decoration: InputDecoration(
-        hintText: 'Name',
+        filled: true,
+        fillColor: AppColors.white,
+        hintText: hint,
         hintStyle: TextStyle(
             color: AppColors.hint,
             fontSize: 14.sp,

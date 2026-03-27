@@ -9,9 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/data/models/login_response_model.dart';
 
-abstract class APIHelper {
-  static final _dio = Dio(BaseOptions(baseUrl: EndPoints.baseURL));
-
+abstract class APIHelper{
+  static final _dio = Dio(BaseOptions(
+    baseUrl: EndPoints.baseURL
+  ));
   static Future init() async {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       print("--- Headers : ${options.headers.toString()}");
@@ -69,13 +70,51 @@ abstract class APIHelper {
     }));
   }
 
+  static Future<Either<String, String>> addTask({
+    required String title,
+    required String description
+}) async{
+    try {
+      var response = await _dio.post(
+          EndPoints.newTask,
+          data: FormData.fromMap({
+            'title': title,
+            'description': description,
+          }),
+          options: Options(
+              headers: {
+                'Authorization': 'Bearer ${CacheHelper.getValue(
+                    CacheKeys.accessToken)}'
+              }
+          )
+      );
+      var data = response.data as Map<String, dynamic>;
+      return right(data['message'] ?? 'Task added successfully');
+    }
+    catch(e){
+      if(e is DioException){
+        var data = e.response?.data as Map<String, dynamic>;
+        return left(data['message'] ?? 'Something went wrong');
+      }
+      else{
+        return left('Something went wrong');
+      }
+    }
+  }
+
+
+
+
+
+
+
 
   static Future<Either<String, UserModel>> getUserData() async {
     try {
       var userDataResponse = await _dio.get(EndPoints.getUserData,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+            'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
           }));
       var data = userDataResponse.data as Map<String, dynamic>;
       UserModel userModel = UserModel.fromJson(data['user']);
@@ -121,7 +160,7 @@ abstract class APIHelper {
       var registerResponse = await _dio.get('my_tasks',
           options: Options(headers: {
             'Authorization':
-                'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+            'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
           }));
       var tasksResponse = registerResponse.data as Map<String, dynamic>;
       List<TaskModel> tasks = [];
@@ -139,4 +178,43 @@ abstract class APIHelper {
       }
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

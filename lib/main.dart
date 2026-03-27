@@ -110,6 +110,7 @@ class ChangePasswordView extends StatelessWidget {
                 ),
                 SizedBox(height: 30,),
                 CustomTextField(
+                  controller: TextEditingController(),
 
                 )
               ],
