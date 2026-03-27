@@ -9,6 +9,78 @@ import 'package:nti5/features/auth/views/login_view.dart';
 import 'package:nti5/features/home/data/models/task_model.dart';
 
 import 'widgets/task_item_builder.dart';
+
+
+class MainLayout extends StatefulWidget {
+  const MainLayout({super.key});
+
+  @override
+  State<MainLayout> createState() => _MainLayoutState();
+}
+
+class _MainLayoutState extends State<MainLayout> {
+  int currentIndex = 0;
+  List<Widget> screens = [
+    HomeView(),
+    ProfileView(),
+    WeatherView(),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: Colors.red,
+      // body: screens[currentIndex],
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppColors.primary,
+        // backgroundColor: Colors.transparent,
+        // elevation: 0,
+        currentIndex: currentIndex,
+          onTap: (int index){
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(icon: Icon(Icons.sunny), label: 'Weather'),
+          ]
+      ),
+    );
+  }
+}
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+    );
+  }
+}
+class WeatherView extends StatelessWidget {
+  const WeatherView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Weather'),
+      ),
+    );
+  }
+}
+
+
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
   @override

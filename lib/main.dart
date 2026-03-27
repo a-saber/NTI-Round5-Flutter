@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home:
-          CacheHelper.getValue(CacheKeys.accessToken) != null?
-          HomeView():
-          LoginView(),
+          home: MainLayout()
+          // CacheHelper.getValue(CacheKeys.accessToken) != null?
+          // HomeView():
+          // LoginView(),
         );
       },
     );
