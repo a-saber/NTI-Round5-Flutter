@@ -30,6 +30,6 @@ abstract class CacheHelper {
   }
 
   static Future removeValue(String key)async{
-    prefs.remove(key);
+    await prefs.remove(key);
   }
 }

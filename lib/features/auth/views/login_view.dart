@@ -129,7 +129,7 @@ class LoginViewState extends State<LoginView>{
               backgroundColor: AppColors.primary,
             ));
             Navigator.pushAndRemoveUntil(context,
-                MaterialPageRoute(builder: (context)=> HomeView(userModel: userModel,)),
+                MaterialPageRoute(builder: (context)=> HomeView()),
                 (r)=> false
             );
           }

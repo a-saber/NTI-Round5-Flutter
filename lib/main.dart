@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti5/core/cache/cache_helper.dart';
+import 'package:nti5/core/cache/cache_keys.dart';
 
 import 'core/widgets/custom_btn.dart';
 import 'core/widgets/custom_text_field.dart';
@@ -28,7 +29,10 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home: LoginView(),
+          home:
+          CacheHelper.getValue(CacheKeys.accessToken) != null?
+          HomeView():
+          LoginView(),
         );
       },
     );
