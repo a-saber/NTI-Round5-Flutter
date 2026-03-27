@@ -12,7 +12,7 @@ import '../../features/auth/data/models/login_response_model.dart';
 abstract class APIHelper {
   static final _dio = Dio(BaseOptions(baseUrl: EndPoints.baseURL));
 
-  Future init() async {
+  static Future init() async {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       print("--- Headers : ${options.headers.toString()}");
       print("--- endpoint : ${options.path.toString()}");
