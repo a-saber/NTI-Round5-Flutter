@@ -74,7 +74,7 @@ abstract class APIHelper{
   static Future<Either<String, String>> addTask({
     required String title,
     required String description,
-    XFile? image
+    String? imagePath
 }) async{
     try {
       var response = await _dio.post(
@@ -82,7 +82,7 @@ abstract class APIHelper{
           data: FormData.fromMap({
             'title': title,
             'description': description,
-            'image': await MultipartFile.fromFile(image!.path)
+            if(imagePath != null) 'image': await MultipartFile.fromFile(imagePath)
           }),
           options: Options(
               headers: {

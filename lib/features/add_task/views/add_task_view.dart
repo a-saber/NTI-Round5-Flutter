@@ -8,6 +8,7 @@ import 'package:nti5/core/utils/app_assets.dart';
 import 'package:nti5/core/utils/app_colors.dart';
 import 'package:nti5/core/widgets/custom_btn.dart';
 import 'package:nti5/core/widgets/custom_text_field.dart';
+import 'package:nti5/core/widgets/image_manager.dart';
 
 class AddTaskView extends StatefulWidget {
   const AddTaskView({super.key});
@@ -20,7 +21,7 @@ class _AddTaskViewState extends State<AddTaskView> {
   final title = TextEditingController();
   final desc = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  XFile? image;
+  String? imagePath;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,31 +39,31 @@ class _AddTaskViewState extends State<AddTaskView> {
               children:
               [
                 SizedBox(height: 45.h,),
-                GestureDetector(
-                  onTap: pickImage,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.r),
-                    child: Builder(
-                      builder: (context) {
-                        if(image == null){
-                          return Image.asset(AppAssets.flag,
-                            height: 207.h,
-                            width: 260.w,
-                            fit: BoxFit.cover,
-                          );
-                        }
-                        else{
-                          return Image.file(
-                            File(image!.path),
-                            height: 207.h,
-                            width: 260.w,
-                            fit: BoxFit.cover,
-                          );
-                        }
-                      }
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20.r),
+                  child: ImageManager(
+                    unselectedImageBuilder: Image.asset(AppAssets.flag,
+                      height: 207.h,
+                      width: 260.w,
+                      fit: BoxFit.cover,
                     ),
+                    // networkImageBuilder: Image.network('https://res.cloudinary.com/dot3oekpp/image/upload/v1775208484/todos/iboc1rtvuxfmwmpc1q45.jpg',
+                    //   height: 207.h,
+                    //   width: 260.w,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    selectedImageBuilder: (String path){
+                      imagePath = path;
+                      return Image.file(
+                        File(path),
+                        height: 207.h,
+                        width: 260.w,
+                        fit: BoxFit.cover,
+                      );
+                    }
                   ),
                 ),
+
                 SizedBox(height: 30.h,),
                 CustomTextField(
                   controller: title,
@@ -95,7 +96,7 @@ class _AddTaskViewState extends State<AddTaskView> {
       var result = await APIHelper.addTask(
         title: title.text,
         description: desc.text,
-        image: image
+        imagePath: imagePath
       );
       result.fold(
           (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -113,12 +114,5 @@ class _AddTaskViewState extends State<AddTaskView> {
     }
   }
 
-  pickImage ()async{
-    final ImagePicker picker = ImagePicker();
-    // Pick an image.
-    image = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
 
-    });
-  }
 }

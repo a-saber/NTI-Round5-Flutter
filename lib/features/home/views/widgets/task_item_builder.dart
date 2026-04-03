@@ -3,72 +3,79 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti5/core/utils/app_colors.dart';
 import 'package:nti5/features/home/data/models/task_model.dart';
 
+import '../../../add_task/views/update_task_view.dart';
+
 class TaskItemBuilder extends StatelessWidget {
   const TaskItemBuilder({super.key, required this.task});
   final TaskModel task;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: REdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
-        color: AppColors.primaryLight,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset.zero,
-            blurRadius: 4.r,
-            spreadRadius: 0,
-            color: AppColors.black2.withAlpha(60)
-          )
-        ]
-      ),
-      padding: REdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 13
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if(task.imagePath != null)
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(image: NetworkImage(task.imagePath!)),
-              shape: BoxShape.circle
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (_)=> UpdateTaskView( taskModel: task,)));
+      },
+      child: Container(
+        width: double.infinity,
+        margin: REdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: AppColors.primaryLight,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset.zero,
+              blurRadius: 4.r,
+              spreadRadius: 0,
+              color: AppColors.black2.withAlpha(60)
+            )
+          ]
+        ),
+        padding: REdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 13
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if(task.imagePath != null)
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(task.imagePath!)),
+                shape: BoxShape.circle
+              ),
+              height: 50,
+              width: 50,
             ),
-            height: 50,
-            width: 50,
-          ),
-          SizedBox(width: 20,),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(task.title??"",
-                style: TextStyle(
+            SizedBox(width: 20,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(task.title??"",
+                  style: TextStyle(
+                    color: AppColors.hint,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.sp
+                  ),),
+                  SizedBox(height: 13.h,),
+                  Text('Improve my English skills by trying to speek',
+                    style: TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.sp
+                    ),),
+                ],
+              ),
+            ),
+            SizedBox(width: 20.w,),
+            Text('11/03/2025\n05:00 PM',
+              textAlign: TextAlign.center,
+              style: TextStyle(
                   color: AppColors.hint,
                   fontWeight: FontWeight.w400,
                   fontSize: 12.sp
-                ),),
-                SizedBox(height: 13.h,),
-                Text('Improve my English skills by trying to speek',
-                  style: TextStyle(
-                      color: AppColors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.sp
-                  ),),
-              ],
-            ),
-          ),
-          SizedBox(width: 20.w,),
-          Text('11/03/2025\n05:00 PM',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: AppColors.hint,
-                fontWeight: FontWeight.w400,
-                fontSize: 12.sp
-            ),),
-        ],
+              ),),
+          ],
+        ),
       ),
     );
   }
