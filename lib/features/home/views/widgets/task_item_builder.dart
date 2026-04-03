@@ -10,6 +10,7 @@ class TaskItemBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      margin: REdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         color: AppColors.primaryLight,
@@ -29,6 +30,16 @@ class TaskItemBuilder extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if(task.imagePath != null)
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: NetworkImage(task.imagePath!)),
+              shape: BoxShape.circle
+            ),
+            height: 50,
+            width: 50,
+          ),
+          SizedBox(width: 20,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

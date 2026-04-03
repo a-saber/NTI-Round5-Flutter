@@ -122,6 +122,7 @@ class _HomeViewState extends State<HomeView> {
       body: isLoading ?
       const Center(child: CircularProgressIndicator(),) :
       ListView.builder(
+        padding: REdgeInsets.symmetric(horizontal: 20),
           itemCount: tasks.length,
           itemBuilder: (context, index)=> TaskItemBuilder(task: tasks[index])),
     );

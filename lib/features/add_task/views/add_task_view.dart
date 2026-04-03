@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nti5/core/network/api_helper.dart';
 import 'package:nti5/core/utils/app_assets.dart';
 import 'package:nti5/core/utils/app_colors.dart';
@@ -17,6 +20,7 @@ class _AddTaskViewState extends State<AddTaskView> {
   final title = TextEditingController();
   final desc = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  XFile? image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +38,29 @@ class _AddTaskViewState extends State<AddTaskView> {
               children:
               [
                 SizedBox(height: 45.h,),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20.r),
-                  child: Image.asset(AppAssets.flag,
-                    height: 207.h,
-                    width: 260.w,
-                    fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: pickImage,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Builder(
+                      builder: (context) {
+                        if(image == null){
+                          return Image.asset(AppAssets.flag,
+                            height: 207.h,
+                            width: 260.w,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                        else{
+                          return Image.file(
+                            File(image!.path),
+                            height: 207.h,
+                            width: 260.w,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      }
+                    ),
                   ),
                 ),
                 SizedBox(height: 30.h,),
@@ -73,7 +94,8 @@ class _AddTaskViewState extends State<AddTaskView> {
     if(formKey.currentState?.validate() == true){
       var result = await APIHelper.addTask(
         title: title.text,
-        description: desc.text
+        description: desc.text,
+        image: image
       );
       result.fold(
           (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -89,5 +111,14 @@ class _AddTaskViewState extends State<AddTaskView> {
           }
       );
     }
+  }
+
+  pickImage ()async{
+    final ImagePicker picker = ImagePicker();
+    // Pick an image.
+    image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+
+    });
   }
 }

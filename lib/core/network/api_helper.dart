@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nti5/core/cache/cache_helper.dart';
 import 'package:nti5/core/cache/cache_keys.dart';
 import 'package:nti5/core/network/end_points.dart';
@@ -72,7 +73,8 @@ abstract class APIHelper{
 
   static Future<Either<String, String>> addTask({
     required String title,
-    required String description
+    required String description,
+    XFile? image
 }) async{
     try {
       var response = await _dio.post(
@@ -80,6 +82,7 @@ abstract class APIHelper{
           data: FormData.fromMap({
             'title': title,
             'description': description,
+            'image': await MultipartFile.fromFile(image!.path)
           }),
           options: Options(
               headers: {
