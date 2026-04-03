@@ -108,7 +108,7 @@ class _AddTaskViewState extends State<AddTaskView> {
               content: Text(successMsg, style: TextStyle(color: AppColors.white),),
               backgroundColor: AppColors.primary,
             ));
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           }
       );
     }

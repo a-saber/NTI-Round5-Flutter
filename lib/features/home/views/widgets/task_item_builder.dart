@@ -57,7 +57,7 @@ class TaskItemBuilder extends StatelessWidget {
                     fontSize: 12.sp
                   ),),
                   SizedBox(height: 13.h,),
-                  Text('Improve my English skills by trying to speek',
+                  Text(task.description??"",
                     style: TextStyle(
                         color: AppColors.black,
                         fontWeight: FontWeight.w400,

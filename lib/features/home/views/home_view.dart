@@ -38,8 +38,11 @@ class _MainLayoutState extends State<MainLayout> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         backgroundColor: AppColors.primary,
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> AddTaskView()));
+        onPressed: ()async{
+          var result = await Navigator.push(context, MaterialPageRoute(builder: (_)=> AddTaskView()));
+          if(result == true){
+            // fetch tasks again
+          }
         }, child: Icon(Icons.add, color: AppColors.white,),),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: AppColors.primary,

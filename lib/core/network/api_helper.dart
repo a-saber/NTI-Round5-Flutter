@@ -105,6 +105,41 @@ abstract class APIHelper{
     }
   }
 
+  static Future<Either<String, String>> updateTask({
+    required int id,
+    required String title,
+    required String description,
+    String? imagePath
+}) async{
+    try {
+      var response = await _dio.put(
+          '${EndPoints.updateTask}/$id',
+          data: FormData.fromMap({
+            'title': title,
+            'description': description,
+            if(imagePath != null) 'image': await MultipartFile.fromFile(imagePath)
+          }),
+          options: Options(
+              headers: {
+                'Authorization': 'Bearer ${CacheHelper.getValue(
+                    CacheKeys.accessToken)}'
+              }
+          )
+      );
+      var data = response.data as Map<String, dynamic>;
+      return right(data['message'] ?? 'Task updated successfully');
+    }
+    catch(e){
+      if(e is DioException){
+        var data = e.response?.data as Map<String, dynamic>;
+        return left(data['message'] ?? 'Something went wrong');
+      }
+      else{
+        return left('Something went wrong');
+      }
+    }
+  }
+
 
 
 
