@@ -239,6 +239,35 @@ abstract class APIHelper{
 
 }
 
+abstract class NewsAPIHelper{
+  static final dio = Dio(BaseOptions(
+      baseUrl: 'https://newsapi.org/v2/'
+  ));
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

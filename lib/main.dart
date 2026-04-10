@@ -9,6 +9,7 @@ import 'core/widgets/custom_text_field.dart';
 import 'cubit_test_view.dart';
 import 'features/auth/views/login_view.dart';
 import 'features/home/views/home_view.dart';
+import 'features/news/views/news_view.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home: TestView()
+          home: NewsView()
           // MainLayout()
           // CacheHelper.getValue(CacheKeys.accessToken) != null?
           // MainLayout():
