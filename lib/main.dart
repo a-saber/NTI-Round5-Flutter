@@ -6,6 +6,7 @@ import 'package:nti5/core/cache/cache_keys.dart';
 import 'core/network/api_helper.dart';
 import 'core/widgets/custom_btn.dart';
 import 'core/widgets/custom_text_field.dart';
+import 'cubit_test_view.dart';
 import 'features/auth/views/login_view.dart';
 import 'features/home/views/home_view.dart';
 
@@ -31,11 +32,11 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home:
+          home: TestView()
           // MainLayout()
-          CacheHelper.getValue(CacheKeys.accessToken) != null?
-          MainLayout():
-          LoginView(),
+          // CacheHelper.getValue(CacheKeys.accessToken) != null?
+          // MainLayout():
+          // LoginView(),
         );
       },
     );
