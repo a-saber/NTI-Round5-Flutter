@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti5/core/widgets/image_manager.dart';
 import 'package:nti5/features/auth/cubits/register/register_cubit.dart';
 import 'package:nti5/features/auth/cubits/register/register_state.dart';
 import 'package:nti5/features/auth/views/login_view.dart';
@@ -48,6 +51,20 @@ class RegisterView extends StatelessWidget {
                     child: Column(
                       children:
                       [
+
+                        ImageManager(
+                          unselectedImageBuilder: Icon(Icons.image, size: 50,),
+                          onImageSelected: (path)=> cubit.imagePath = path,
+                          selectedImageBuilder: (String imagePath){
+                            return SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: Image.file(File(imagePath), fit: BoxFit.contain,)
+                            );
+                          }
+                        ),
+                        SizedBox(height: 40,),
+
                         TextFormField(
                           controller: cubit.emailController,
                           validator: (String? value){

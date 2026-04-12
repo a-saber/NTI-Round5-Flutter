@@ -5,10 +5,13 @@ class ImageManager extends StatefulWidget {
   const ImageManager({super.key,
     required this.unselectedImageBuilder,
     required this.selectedImageBuilder,
-    this.networkImageBuilder
+    this.networkImageBuilder,
+    this.onImageSelected,
+
   });
   final Widget unselectedImageBuilder;
   final Widget Function(String imagePath) selectedImageBuilder;
+  final void Function(String imagePath)? onImageSelected;
   final Widget? networkImageBuilder;
 
   @override
@@ -39,6 +42,9 @@ class _ImageManagerState extends State<ImageManager> {
   pickImage ()async{
     // Pick an image.
     image = await picker.pickImage(source: ImageSource.gallery);
+    if(image != null && widget.onImageSelected != null){
+      widget.onImageSelected!(image!.path);
+    }
     setState(() {
 
     });
