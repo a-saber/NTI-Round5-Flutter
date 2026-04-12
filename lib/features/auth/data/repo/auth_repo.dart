@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nti5/core/network/api_helper.dart';
@@ -36,6 +38,32 @@ class AuthRepo{
       }
       else{
         return left(loginResponse.message);
+      }
+
+
+    } catch (e) {
+      return left(ApiResponse.fromError(e).message);
+    }
+  }
+
+  Future<Either<String, String>> register(
+      {required String username, required String password, String? imagePath}) async {
+    try {
+      var response = await apiHelper.postRequest(
+        endPoint: EndPoints.register,
+        data: {
+          'username': username,
+          'password': password,
+          if(imagePath != null) 'image': await MultipartFile.fromFile(imagePath)
+        },
+      );
+
+      if(response.status){
+        // serialization
+        return right(response.message);
+      }
+      else{
+        return left(response.message);
       }
 
 
