@@ -14,6 +14,7 @@ import 'features/auth/views/register_view.dart';
 import 'features/home/views/home_view.dart';
 import 'features/news/views/news_view.dart';
 import 'features/test_tr.dart';
+import 'test_location_view.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget{
           // MainLayout():
           // LoginView(),
           // RegisterView()
-          TestTr()
+          // TestTr()
+          TestLocationView()
         );
       },
     );

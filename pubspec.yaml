@@ -41,7 +41,9 @@ dependencies:
   shared_preferences:
   image_picker:
   flutter_bloc:
-  get: 
+  get:
+#  geolocator: ^14.0.2
+  google_maps_flutter:
 
 dev_dependencies:
   flutter_test:
