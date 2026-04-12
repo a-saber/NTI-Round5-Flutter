@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nti5/core/network/api_helper.dart';
 import 'package:nti5/core/utils/app_colors.dart';
 import 'package:nti5/features/auth/cubits/login/login_cubit.dart';
@@ -8,6 +9,8 @@ import 'package:nti5/features/auth/cubits/login/login_state.dart';
 import 'package:nti5/features/auth/data/models/login_response_model.dart';
 import 'package:nti5/features/auth/data/models/user_model.dart';
 import 'package:nti5/features/home/views/home_view.dart';
+
+import '../../../core/translation/translation_keys.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -20,7 +23,7 @@ class LoginView extends StatelessWidget {
       create: (context)=> LoginCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text(TranslationKeys.login.tr),
         ),
         body: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state){
@@ -111,7 +114,8 @@ class LoginView extends StatelessWidget {
 
                         SizedBox(height: 20,),
 
-                        ElevatedButton(onPressed: state is LoginLoading? null: cubit.login, child: Text('login')),
+                        ElevatedButton(onPressed: state is LoginLoading? null: cubit.login,
+                            child: Text(TranslationKeys.login.tr)),
                         SizedBox(height: 20,),
                         if(state is LoginLoading)
                           CircularProgressIndicator(color: AppColors.primary,)

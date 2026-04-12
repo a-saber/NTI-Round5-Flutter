@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nti5/core/cache/cache_helper.dart';
 import 'package:nti5/core/cache/cache_keys.dart';
+import 'package:nti5/core/translation/translation_helper.dart';
 
 import 'core/network/api_helper.dart';
 import 'core/widgets/custom_btn.dart';
@@ -11,6 +13,7 @@ import 'features/auth/views/login_view.dart';
 import 'features/auth/views/register_view.dart';
 import 'features/home/views/home_view.dart';
 import 'features/news/views/news_view.dart';
+import 'features/test_tr.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +31,9 @@ class MyApp extends StatelessWidget{
     return ScreenUtilInit(
       designSize: Size(375, 812),
       builder: (context, widget){
-        return MaterialApp(
+        return GetMaterialApp(
+          translations: TranslationHelper(),
+          locale: Locale('ar'),
           theme: ThemeData(
             fontFamily: 'Lexend_Deca'
           ),
@@ -39,7 +44,8 @@ class MyApp extends StatelessWidget{
           // CacheHelper.getValue(CacheKeys.accessToken) != null?
           // MainLayout():
           // LoginView(),
-          RegisterView()
+          // RegisterView()
+          TestTr()
         );
       },
     );

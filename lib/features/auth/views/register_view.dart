@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nti5/core/widgets/image_manager.dart';
 import 'package:nti5/features/auth/cubits/register/register_cubit.dart';
 import 'package:nti5/features/auth/cubits/register/register_state.dart';
 import 'package:nti5/features/auth/views/login_view.dart';
 
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/utils/app_colors.dart';
 
 class RegisterView extends StatelessWidget {
@@ -19,7 +21,7 @@ class RegisterView extends StatelessWidget {
       create: (context)=> RegisterCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Register'),
+          title: Text(TranslationKeys.register.tr),
         ),
         body: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state){
@@ -126,7 +128,7 @@ class RegisterView extends StatelessWidget {
                         ElevatedButton(
                           onPressed: state is RegisterLoading?
                           null: cubit.register,
-                            child: Text('Register'),
+                            child: Text(TranslationKeys.register.tr),
                         ),
                         SizedBox(height: 20,),
                         if(state is RegisterLoading)
