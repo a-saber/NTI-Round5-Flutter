@@ -92,26 +92,26 @@ class _AddTaskViewState extends State<AddTaskView> {
     );
   }
   onAddTaskPressed() async{
-    if(formKey.currentState?.validate() == true){
-      var result = await APIHelper.addTask(
-        title: title.text,
-        description: desc.text,
-        imagePath: imagePath
-      );
-      result.fold(
-          (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(errorMsg, style: TextStyle(color: AppColors.white),),
-            backgroundColor: AppColors.error,
-          )),
-          (successMsg){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(successMsg, style: TextStyle(color: AppColors.white),),
-              backgroundColor: AppColors.primary,
-            ));
-            Navigator.pop(context, true);
-          }
-      );
-    }
+    // if(formKey.currentState?.validate() == true){
+    //   var result = await APIHelper.addTask(
+    //     title: title.text,
+    //     description: desc.text,
+    //     imagePath: imagePath
+    //   );
+    //   result.fold(
+    //       (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //         content: Text(errorMsg, style: TextStyle(color: AppColors.white),),
+    //         backgroundColor: AppColors.error,
+    //       )),
+    //       (successMsg){
+    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //           content: Text(successMsg, style: TextStyle(color: AppColors.white),),
+    //           backgroundColor: AppColors.primary,
+    //         ));
+    //         Navigator.pop(context, true);
+    //       }
+    //   );
+    // }
   }
 
 

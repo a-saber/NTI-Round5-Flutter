@@ -112,7 +112,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: isLoading ? null : AppBar(
-        title: Text(userModel.username??''),
+        // title: Text(userModel.username??''),
         actions: [
           IconButton(onPressed: ()async{
             await CacheHelper.removeValue(CacheKeys.accessToken);
@@ -132,31 +132,31 @@ class _HomeViewState extends State<HomeView> {
   }
 
   getTasks() async {
-    var result = await APIHelper.getTasks();
-    isLoading = false;
-    result.fold(
-        (error)=>  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error, style: TextStyle(color: AppColors.white),),
-          backgroundColor: AppColors.error,
-        )),
-        (t) => setState(() {
-          tasks = t;
-        })
-    );
+    // var result = await APIHelper.getTasks();
+    // isLoading = false;
+    // result.fold(
+    //     (error)=>  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //       content: Text(error, style: TextStyle(color: AppColors.white),),
+    //       backgroundColor: AppColors.error,
+    //     )),
+    //     (t) => setState(() {
+    //       tasks = t;
+    //     })
+    // );
   }
 
   Future getUserData() async{
-    isLoading = true;
-    var result = await APIHelper.getUserData();
-    result.fold(
-      (error)=>  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error, style: TextStyle(color: AppColors.white),),
-        backgroundColor: AppColors.error,
-        )),
-        (userModel)=> setState(() {
-          this.userModel = userModel;
-        })
-    );
+    // isLoading = true;
+    // var result = await APIHelper.getUserData();
+    // result.fold(
+    //   (error)=>  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text(error, style: TextStyle(color: AppColors.white),),
+    //     backgroundColor: AppColors.error,
+    //     )),
+    //     (userModel)=> setState(() {
+    //       this.userModel = userModel;
+    //     })
+    // );
   }
 
 }

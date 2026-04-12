@@ -14,17 +14,17 @@ class NewsCubit extends Cubit<NewsState>{
 
 
   fetchNews()async{
-    emit(NewsLoadingState());
-    var result = await NewsRepo().fetchNews();
-    result.fold(
-        (errorMsg){
-          errorMessage = errorMsg;
-          emit(NewsErrorState());
-        },
-        (articles) {
-          this.articles = articles;
-          emit(NewsSuccessState());
-        }
-    );
+    // emit(NewsLoadingState());
+    // var result = await NewsRepo().fetchNews();
+    // result.fold(
+    //     (errorMsg){
+    //       errorMessage = errorMsg;
+    //       emit(NewsErrorState());
+    //     },
+    //     (articles) {
+    //       this.articles = articles;
+    //       emit(NewsSuccessState());
+    //     }
+    // );
   }
 }

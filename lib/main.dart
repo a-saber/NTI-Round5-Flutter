@@ -33,11 +33,11 @@ class MyApp extends StatelessWidget{
           ),
           debugShowCheckedModeBanner: false,
           // design 1st screen
-          home: NewsView()
+          home:
           // MainLayout()
           // CacheHelper.getValue(CacheKeys.accessToken) != null?
           // MainLayout():
-          // LoginView(),
+          LoginView(),
         );
       },
     );

@@ -104,27 +104,27 @@ class _UpdateTaskViewState extends State<UpdateTaskView> {
   }
 
   onUpdateTaskPressed() async{
-    if(formKey.currentState?.validate() == true){
-      var result = await APIHelper.updateTask(
-        id: widget.taskModel.id??0,
-          title: title.text,
-          description: desc.text,
-          imagePath: imagePath
-      );
-      result.fold(
-              (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(errorMsg, style: TextStyle(color: AppColors.white),),
-            backgroundColor: AppColors.error,
-          )),
-              (successMsg){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(successMsg, style: TextStyle(color: AppColors.white),),
-              backgroundColor: AppColors.primary,
-            ));
-            Navigator.pop(context);
-          }
-      );
-    }
+    // if(formKey.currentState?.validate() == true){
+    //   var result = await APIHelper.updateTask(
+    //     id: widget.taskModel.id??0,
+    //       title: title.text,
+    //       description: desc.text,
+    //       imagePath: imagePath
+    //   );
+    //   result.fold(
+    //           (errorMsg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //         content: Text(errorMsg, style: TextStyle(color: AppColors.white),),
+    //         backgroundColor: AppColors.error,
+    //       )),
+    //           (successMsg){
+    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //           content: Text(successMsg, style: TextStyle(color: AppColors.white),),
+    //           backgroundColor: AppColors.primary,
+    //         ));
+    //         Navigator.pop(context);
+    //       }
+    //   );
+    // }
   }
 
 }
