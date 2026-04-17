@@ -15,6 +15,7 @@ import 'features/home/views/home_view.dart';
 import 'features/news/views/news_view.dart';
 import 'features/test_tr.dart';
 import 'test_location_view.dart';
+import 'features/trip/views/trip_view.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget{
           // LoginView(),
           // RegisterView()
           // TestTr()
-          TestLocationView()
+          // TestLocationView()
+          TripView()
         );
       },
     );
