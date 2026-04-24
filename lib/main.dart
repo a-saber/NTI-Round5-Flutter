@@ -43,13 +43,13 @@ class MyApp extends StatelessWidget{
           // design 1st screen
           home:
           // MainLayout()
-          // CacheHelper.getValue(CacheKeys.accessToken) != null?
-          // MainLayout():
-          // LoginView(),
+          CacheHelper.getValue(CacheKeys.accessToken) != null?
+          MainLayout():
+          LoginView(),
           // RegisterView()
           // TestTr()
           // TestLocationView()
-          TripView()
+          // TripView()
         );
       },
     );

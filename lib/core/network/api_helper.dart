@@ -11,26 +11,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/data/models/login_response_model.dart';
 import 'api_response.dart';
 
-
 class APIHelper {
-
-
   // declaring dio
-  static final Dio _dio = Dio(BaseOptions(
-    baseUrl: EndPoints.baseURL
-  ));
+  static final Dio _dio = Dio(BaseOptions(baseUrl: EndPoints.baseURL));
+
   static Future init() async {
-    _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+    _dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (options, handler) {
       print("--- Headers : ${options.headers.toString()}");
       print("--- endpoint : ${options.path.toString()}");
       return handler.next(options);
-    }, onResponse: (response, handler) {
+    },
+        onResponse: (response, handler) {
       print("--- Response : ${response.data.toString()}");
       return handler.next(response);
-    }, onError: (DioException error, handler) async {
+    },
+        onError: (DioException error, handler) async {
       print("--- Error : ${error.response?.data.toString()}");
       var errorResponse = error.response?.data as Map<String, dynamic>;
-      try{
+      try {
         if (errorResponse['message']
             .toString()
             .contains('Token has expired.')) {
@@ -67,14 +66,13 @@ class APIHelper {
           final response = await _dio.fetch(options);
           return handler.resolve(response);
         }
-      }
-      catch(e){
-
-      }
+      } catch (e) {}
 
       return handler.next(error);
-    }));
+    })
+    );
   }
+
   // get request
 
   Future<ApiResponse> getRequest({
@@ -84,7 +82,12 @@ class APIHelper {
     bool isAuthorized = true,
   }) async {
     try {
-      var response = await _dio.get(endPoint, queryParameters: queryParams);
+      var response = await _dio.get(endPoint, queryParameters: queryParams, options: Options(
+        headers: {
+          if(isAuthorized)'Authorization':
+              'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
+        }
+      ));
       return ApiResponse.fromResponse(response);
     } catch (e) {
       return ApiResponse.fromError(e);
@@ -105,8 +108,8 @@ class APIHelper {
         data: data == null
             ? null
             : isFormData
-            ? FormData.fromMap(data)
-            : data,
+                ? FormData.fromMap(data)
+                : data,
       );
       return ApiResponse.fromResponse(response);
     } catch (e) {
@@ -127,8 +130,8 @@ class APIHelper {
         data: data == null
             ? null
             : isFormData
-            ? FormData.fromMap(data)
-            : data,
+                ? FormData.fromMap(data)
+                : data,
       );
       return ApiResponse.fromResponse(response);
     } catch (e) {
@@ -148,8 +151,8 @@ class APIHelper {
         data: data == null
             ? null
             : isFormData
-            ? FormData.fromMap(data)
-            : data,
+                ? FormData.fromMap(data)
+                : data,
       );
       return ApiResponse.fromResponse(response);
     } catch (e) {
@@ -157,7 +160,6 @@ class APIHelper {
     }
   }
 }
-
 
 // abstract class APIHelper{
 //   static final _dio = Dio(BaseOptions(
@@ -397,40 +399,3 @@ class APIHelper {
 //   }
 //
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -19,7 +19,7 @@ class AuthRepo{
     try {
       var loginResponse = await apiHelper.postRequest(
         endPoint: EndPoints.login,
-        data: {'username': username, 'password': password},
+        data: {'email': username, 'password': password},
       );
 
       if(loginResponse.status){

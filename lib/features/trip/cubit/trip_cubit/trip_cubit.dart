@@ -18,6 +18,8 @@ class TripCubit extends Cubit<TripState>{
     else{
       changeToLocation(latLng);
     }
+    emit(LocationChanged());
+
   }
 
   changeFromLocation(LatLng newLocation){
@@ -26,7 +28,6 @@ class TripCubit extends Cubit<TripState>{
       markerId: MarkerId('from'),
       position: fromLocation!
     ));
-    emit(LocationChanged());
   }
   changeToLocation(LatLng newLocation){
     toLocation = newLocation;
@@ -34,11 +35,11 @@ class TripCubit extends Cubit<TripState>{
       markerId: MarkerId('to'),
       position: toLocation!
     ));
-    polylines.clear();
-    polylines.add(Polyline(
-      polylineId: PolylineId('1'),
-      points: [fromLocation!, toLocation!]
-    ));
-    emit(LocationChanged());
+    polylines = {
+      Polyline(
+          polylineId: PolylineId('1'),
+          points: [fromLocation!, toLocation!]
+      )
+    };
   }
 }
